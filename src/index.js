@@ -1,3 +1,14 @@
+//variables
+let url = 'http://localhost:3000/films'// json link
+const listHolder = document.getElementById('films')
+
+
+
+document.addEventListener('DOMContentLoaded', ()=>{
+    document.getElementsByClassName('film item')[0].remove()
+    fetchMovies(url)
+})
+
 // movie details
 function setUpMovieDetails(childMovie){
     const preview = document.getElementById('poster')
@@ -14,16 +25,6 @@ function setUpMovieDetails(childMovie){
     const tickets  = document.querySelector('#ticket-num')
     tickets.textContent = childMovie.capacity -childMovie.tickets_sold;
 }
-//variables
-let url = 'http://localhost:3000/films'// json link
-const listHolder = document.getElementById('films')
-
-
-
-document.addEventListener('DOMContentLoaded', ()=>{
-    document.getElementsByClassName('film item')[0].remove()
-    fetchMovies(url)
-})
 //buying ticket section
 const btn = document.getElementById('buy-ticket')
 
