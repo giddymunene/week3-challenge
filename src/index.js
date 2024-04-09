@@ -1,5 +1,5 @@
 //variables
-let url = 'http://localhost:3000/films'// json link
+let url = 'https://json-server-p29u.onrender.com/films'// json link
 const listHolder = document.getElementById('films')
 
 
