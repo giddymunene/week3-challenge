@@ -42,7 +42,7 @@ const btn = document.getElementById('buy-ticket')
 
 
 
-
+// movie diplay
 function displayMovie(movie){
    
     const li = document.createElement('li')
