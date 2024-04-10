@@ -1,15 +1,50 @@
-//variables
-let url = 'http://localhost:3000/films'// json link
+
+let url = 'https://json-server-p29u.onrender.com/films'// json link
 const listHolder = document.getElementById('films')
-
-
-
 document.addEventListener('DOMContentLoaded', ()=>{
     document.getElementsByClassName('film item')[0].remove()
     fetchMovies(url)
 })
 
-// movie details
+//Create fetch function
+function fetchMovies(url){
+    fetch(url)
+    .then(response => response.json())
+    .then(movies => {
+        movies.forEach(movie => {
+            displayMovie(movie)
+        });
+    })
+}
+
+function displayMovie(movie){
+   
+    const li = document.createElement('li')
+    li.style.cursor="pointer"
+    li.textContent= (movie.title).toUpperCase()
+    listHolder.appendChild(li)
+    addClickEvent()
+}
+function addClickEvent(){
+    let children=listHolder.children
+    // console.log(children)
+
+    for(let i=0; i<children.length; i++){
+        let child=children[i]
+        // console.log(child)
+
+        child.addEventListener('click',() => {
+            fetch(`${url}/${i+0}`)
+
+            .then(res => res.json())
+            .then(movie => {
+                document.getElementById('buy-ticket').textContent = 'Buy Ticket'
+                setUpMovieDetails(movie)
+            })
+
+        })
+    }
+}
 function setUpMovieDetails(childMovie){
     const preview = document.getElementById('poster')
     preview.src = childMovie.poster;
@@ -25,7 +60,6 @@ function setUpMovieDetails(childMovie){
     const tickets  = document.querySelector('#ticket-num')
     tickets.textContent = childMovie.capacity -childMovie.tickets_sold;
 }
-//buying ticket section
 const btn = document.getElementById('buy-ticket')
 
         btn.addEventListener('click', function(e){
@@ -39,46 +73,3 @@ const btn = document.getElementById('buy-ticket')
                 btn.textContent = 'Sold Out'
             }
     })
-
-
-
-// movie diplay
-function displayMovie(movie){
-   
-    const li = document.createElement('li')
-    li.style.cursor="pointer"
-    li.textContent= (movie.title).toUpperCase()
-    listHolder.appendChild(li)
-    addClickEvent()
-}
-function addClickEvent(){
-    let children=listHolder.children
-    
-
-    for(let i=0; i<children.length; i++){
-        let child=children[i]
-    
-
-        child.addEventListener('click',() => {
-            fetch(`${url}/${i+0}`)
-
-            .then(res => res.json())
-            .then(movie => {
-                document.getElementById('buy-ticket').textContent = 'Buy Ticket'
-                setUpMovieDetails(movie)
-            })
-
-        })
-    }
-}
-
-//back end
-function fetchMovies(url){
-    fetch(url)
-    .then(response => response.json())
-    .then(movies => {
-        movies.forEach(movie => {
-            displayMovie(movie)
-        });
-    })
-}
